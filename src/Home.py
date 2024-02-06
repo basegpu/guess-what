@@ -17,14 +17,15 @@ def run():
     if not factor:
         st.warning('Bitte wähle deine Reihe im Menü links aus.')
         return
-
-    st.header(f'Die {factor}-er Reihe:')
     
-    exercises = [ Medium(20), Simple()]
+    exercises = [ Medium(target=20, penalty=3), Simple()]
     ex = st.sidebar.selectbox('Wähle deine Übung', exercises, None)
     if not ex:
         st.warning('Bitte wähle deine Übung im Menü links aus.')
         return
+    st.sidebar.markdown('***')
+    st.sidebar.write('Anleitung')
+    st.sidebar.markdown(ex.instruction)
 
     problems = [Problem(base_factor=i, multiplicator=factor) for i in range(1, 11)]
     ex.make(problems)
