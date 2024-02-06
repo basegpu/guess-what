@@ -20,10 +20,16 @@ class ExerciseState:
         st.session_state[self.POINTS_KEY] += 1
         st.session_state.pop(self.PROBLEM_KEY)
     
+    def failure(self) -> None:
+        st.session_state[self.POINTS_KEY] -= 3
+    
     def get_current_problem(self, problems: list[Problem]) -> Problem:
         if self.PROBLEM_KEY not in st.session_state.keys():
             st.session_state[self.PROBLEM_KEY] = get_random_problem(problems)
         return st.session_state[self.PROBLEM_KEY]
+    
+    def reset(self) -> None:
+        st.session_state[self.POINTS_KEY] = 0
 
 
 def get_random_problem(problems: list[Problem]) -> Problem:
