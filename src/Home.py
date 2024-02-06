@@ -26,7 +26,7 @@ def run():
         st.warning('Bitte wähle deine Übung im Menü links aus.')
         return
 
-    problems = [Problem(factor1=i, factor2=factor) for i in range(1, 11)]
+    problems = [Problem(base_factor=i, multiplicator=factor) for i in range(1, 11)]
     ex.make(problems)
 
 

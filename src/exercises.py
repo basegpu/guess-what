@@ -61,9 +61,23 @@ class Medium(ExerciseFactory):
                  on_click=state.success)
             
             # assign the wrong answers to the other buttons
+            alt = [problem.result + 1,
+                   problem.result + 2,
+                   problem.result - 1,
+                   problem.result - 2,
+                   problem.result + 10,
+                   problem.result - 10]
+            alt.extend(problem.result_neighbours)
+            # remove negative answers
+            alt = [candidate for candidate in alt if candidate >= 0]
+            # remove duplicates
+            alt = list(set(alt))
+            # shuffle it
+            random.shuffle(alt)
+
             for i, col in enumerate(cols):
                 col.button(
-                     f' {problem.result + i + 1} ',
+                     f' {alt[i]} ',
                      use_container_width=True,
                      on_click=state.failure)
 

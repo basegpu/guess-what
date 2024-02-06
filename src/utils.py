@@ -34,5 +34,6 @@ class ExerciseState:
 
 def get_random_problem(problems: list[Problem]) -> Problem:
     problem = random.choice(problems)
-    problem.inverse(random.random() < 0.5)
+    if random.random() < 0.5:
+        problem.inverse()
     return problem
