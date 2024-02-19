@@ -25,7 +25,7 @@ def run():
     st.sidebar.markdown(ex.instruction)
 
     problems = set([Problem(base_factor=i, multiplicator=f) for i in range(1, 11) for f in factors])
-    ex.make(problems)
+    ex.make(list(problems))
 
 
 if __name__ == '__main__':
