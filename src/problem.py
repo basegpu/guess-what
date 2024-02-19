@@ -12,6 +12,16 @@ class Problem(BaseModel):
     def __str__(self) -> str:
         f1, f2 = (self.base_factor, self.multiplicator) if self.inversed else (self.multiplicator, self.base_factor)
         return f'{f1} x {f2}'
+    
+    def __hash__(self):
+        if self.base_factor < self.multiplicator:
+            return hash((self.multiplicator, self.base_factor))
+        return hash((self.base_factor, self.multiplicator))
+    
+    def __eq__(self, other):
+        if other.__class__ is self.__class__:
+            return self.__hash__() == other.__hash__()
+        return NotImplemented
 
     @property
     def result(self) -> int:

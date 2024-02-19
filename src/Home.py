@@ -9,12 +9,9 @@ LOGGER = get_logger(__name__)
 
 
 def run():
-
-    factors = range(1, 11)
-
     st.sidebar.title('Multiplikationstrainer')
-    factor = st.sidebar.selectbox('Wähle deine Reihe', factors, None)
-    if not factor:
+    factors = st.sidebar.multiselect('Wähle deine Reihe(n)', range(1, 13), None)
+    if not factors:
         st.warning('Bitte wähle deine Reihe im Menü links aus.')
         return
     
@@ -27,7 +24,7 @@ def run():
     st.sidebar.write('Anleitung')
     st.sidebar.markdown(ex.instruction)
 
-    problems = [Problem(base_factor=i, multiplicator=factor) for i in range(1, 11)]
+    problems = set([Problem(base_factor=i, multiplicator=f) for i in range(1, 11) for f in factors])
     ex.make(problems)
 
 
