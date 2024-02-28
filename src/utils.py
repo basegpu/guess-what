@@ -1,7 +1,6 @@
-import random
 import streamlit as st
 
-from problem import Problem
+from problem import Problem, ProblemFactory
 
 
 class ExerciseState:
@@ -23,17 +22,10 @@ class ExerciseState:
     def failure(self) -> None:
         st.session_state[self.POINTS_KEY] -= 3
     
-    def get_current_problem(self, problems: list[Problem]) -> Problem:
+    def get_current_problem(self, factory: ProblemFactory) -> Problem:
         if self.PROBLEM_KEY not in st.session_state.keys():
-            st.session_state[self.PROBLEM_KEY] = get_random_problem(problems)
+            st.session_state[self.PROBLEM_KEY] = factory.make()
         return st.session_state[self.PROBLEM_KEY]
     
     def reset(self) -> None:
         st.session_state[self.POINTS_KEY] = 0
-
-
-def get_random_problem(problems: list[Problem]) -> Problem:
-    problem = random.choice(problems)
-    if random.random() < 0.5:
-        problem.inverse()
-    return problem

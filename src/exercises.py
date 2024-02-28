@@ -1,8 +1,8 @@
 import random
 import streamlit as st
-from problem import Problem
+from problem import Problem, ProblemFactory
 
-from utils import ExerciseState, get_random_problem
+from utils import ExerciseState
 
 
 class ExerciseFactory():
@@ -17,7 +17,7 @@ class ExerciseFactory():
     def __str__(self) -> str:
         return self.name
 
-    def make(self, _: list[(int, int, int)]):
+    def make(self, _: ProblemFactory):
         raise NotImplementedError('Method "make" not implemented')
 
 
@@ -28,8 +28,8 @@ class Simple(ExerciseFactory):
             'Rechnen und Überprüfen',
             '- Versuche die Aufgaben zu lösen\n - klicke drauf um die Lösung zu sehen')
 
-    def make(self, problems: list[Problem]):
-        for p in problems:
+    def make(self, factory: ProblemFactory):
+        for p in factory.problems:
             container = st.empty()
             problem = container.button(f' {p} ')
             if problem:
@@ -49,10 +49,10 @@ class Medium(ExerciseFactory):
         self.target = target
         self.penalty = penalty
 
-    def make(self, problems: list[Problem]):
+    def make(self, factory: ProblemFactory):
         # the problem
         state = ExerciseState()
-        problem = state.get_current_problem(problems)
+        problem = state.get_current_problem(factory)
         _, col, _ = st.columns([2, 1, 2])
         with col:
             st.title(f' :blue[{problem}] ')
