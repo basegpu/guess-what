@@ -1,6 +1,6 @@
 import random
 import streamlit as st
-from problem import Problem, ProblemFactory
+from problem import ProblemFactory
 
 from utils import ExerciseState
 
@@ -77,7 +77,7 @@ class Medium(ExerciseFactory):
                 problem.result - 10]
         alt.extend(problem.result_neighbours)
         # remove negative answers
-        alt = [candidate for candidate in alt if candidate >= 0]
+        alt = [candidate for candidate in alt if candidate >= 0 and candidate != problem.result]
         # remove duplicates
         alt = list(set(alt))
         # shuffle it
@@ -85,9 +85,9 @@ class Medium(ExerciseFactory):
 
         for i, col in enumerate(cols):
             col.button(
-                    f' {alt[i]} ',
-                    use_container_width=True,
-                    on_click=state.failure)
+                f' {alt[i]} ',
+                use_container_width=True,
+                on_click=state.failure)
 
         # result reporting
         st.write('')
