@@ -46,6 +46,7 @@ class Problem(BaseModel):
     @property
     def result_neighbours(self) -> list[int]:
         if self.inversed:
+            # anything
             return [self.multiplicator + 1, self.multiplicator - 1]
         else:
             alt = [
